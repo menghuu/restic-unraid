@@ -1,0 +1,63 @@
+<?xml version='1.0' standalone='yes'?>
+
+<!DOCTYPE PLUGIN [
+<!ENTITY name				"restic">
+<!ENTITY author				"menghuu">
+<!ENTITY version			"2025.11.19">
+<!ENTITY pluginURL			"https://raw.githubusercontent.com/menghuu/restic-unraid/master/plugin/restic.plg">
+<!ENTITY resticVersion		"0.18.1">
+<!ENTITY resticRelease		"https://github.com/restic/restic/releases/download/v&resticVersion;/restic_&resticVersion;_linux_amd64.bz2">
+<!ENTITY resticSHA256		"680838f19d67151adba227e1570cdd8af12c19cf1735783ed1ba928bc41f363d">
+]>
+
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;">
+
+
+<CHANGES>
+##&name;
+
+###2025.11.19
+- init
+</CHANGES>
+
+
+<!--
+Download official restic release zip file
+-->
+<FILE Name="/boot/config/plugins/restic/restic_&resticVersion;_linux_amd64.bz2">
+<URL>&resticRelease;</URL>
+<SHA256>&resticSHA256;</SHA256>
+</FILE>
+
+
+<!--
+The 'install' script.
+-->
+<FILE Run="/bin/bash">
+<INLINE>
+
+bzip2 -dk "/boot/config/plugins/restic/restic_&resticVersion;_linux_amd64.bz2" -c > /tmp/restic.tmp
+mv /tmp/restic.tmp /usr/sbin/restic
+chmod +x /usr/sbin/restic
+
+/usr/sbin/restic generate --bash-completion /etc/bash_completion.d/restic
+
+</INLINE>
+</FILE>
+
+
+<!--
+The 'remove' script.
+-->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+
+rm -fr "/boot/config/plugins/restic/restic_&resticVersion;_linux_amd64.bz2"
+rm -f /usr/sbin/restic
+rm -f /etc/bash_completion.d/restic
+
+</INLINE>
+</FILE>
+
+
+</PLUGIN>
