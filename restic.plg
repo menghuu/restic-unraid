@@ -16,13 +16,22 @@
 <CHANGES>
 ##&name;
 
-###2025.11.19
+- add icon
 - init
 </CHANGES>
 
 
+<FILE Name="/boot/config/plugins/&name;/icon.png">
+<URL>https://raw.githubusercontent.com/restic/restic/refs/heads/master/doc/logo/logo.png</URL>
+</FILE>
+
+<FILE Name="/usr/local/emhttp/plugins/&name;/images/&name;.png">
+<LOCAL>/boot/config/plugins/&name;/icon.png</LOCAL>
+</FILE>
+
+
 <!--
-Download official restic release zip file
+Download official restic release archive
 -->
 <FILE Name="/boot/config/plugins/restic/restic_&resticVersion;_linux_amd64.bz2">
 <URL>&resticRelease;</URL>
@@ -53,6 +62,7 @@ The 'remove' script.
 <INLINE>
 
 rm -fr "/boot/config/plugins/restic/restic_&resticVersion;_linux_amd64.bz2"
+rm -f "/boot/config/plugins/&name;/icon.png"
 rm -f /usr/sbin/restic
 rm -f /etc/bash_completion.d/restic
 
